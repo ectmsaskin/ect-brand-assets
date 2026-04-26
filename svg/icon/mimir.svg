@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img">
+  <title>Mimir — ECT pantheon — icon variant</title>
+  <desc>Business intelligence. Chalice of wisdom from the well. Rendered in the icon color treatment.</desc>
+  <rect x="0" y="0" width="1024" height="1024" rx="180" fill="#214080"/>
+  <g transform="translate(512, 512) scale(7.4)">
+    
+    <circle cx="0" cy="0" r="52" fill="none" stroke="#f3e830" stroke-width="2"/>
+    <circle cx="0" cy="0" r="44" fill="none" stroke="#f3e830" stroke-width="0.6" opacity="0.55"/>
+    <g stroke="#f3e830" stroke-width="1.6" fill="none">
+      <path d="M 0 -48 C -14 -38 -14 -28 0 -22 C 14 -28 14 -38 0 -48"/>
+      <path d="M 48 0 C 38 -14 28 -14 22 0 C 28 14 38 14 48 0"/>
+      <path d="M 0 48 C 14 38 14 28 0 22 C -14 28 -14 38 0 48"/>
+      <path d="M -48 0 C -38 14 -28 14 -22 0 C -28 -14 -38 -14 -48 0"/>
+    </g>
+    <circle cx="0" cy="-32" r="2.5" fill="#ffffff"/>
+    <circle cx="32" cy="0" r="2.5" fill="#ffffff"/>
+    <circle cx="0" cy="32" r="2.5" fill="#ffffff"/>
+    <circle cx="-32" cy="0" r="2.5" fill="#ffffff"/>
+    
+    <path d="M -15 -16 L -10 4 L 10 4 L 15 -16 Z" fill="#f3e830"/>
+    <ellipse cx="0" cy="-16" rx="15" ry="4" fill="#214080" stroke="#f3e830" stroke-width="1.8"/>
+    <circle cx="0" cy="-15" r="3" fill="#ffffff"/>
+    <rect x="-3" y="4" width="6" height="10" fill="#f3e830"/>
+    <ellipse cx="0" cy="16" rx="11" ry="3.5" fill="#f3e830"/>
+  </g>
+</svg>

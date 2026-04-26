@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img">
+  <title>Yggdrasil — ECT pantheon — icon variant</title>
+  <desc>Data warehouse. Stylized world tree with realm orbs. Rendered in the icon color treatment.</desc>
+  <rect x="0" y="0" width="1024" height="1024" rx="180" fill="#214080"/>
+  <g transform="translate(512, 512) scale(7.4)">
+    
+    <circle cx="0" cy="0" r="52" fill="none" stroke="#f3e830" stroke-width="2"/>
+    <circle cx="0" cy="0" r="44" fill="none" stroke="#f3e830" stroke-width="0.6" opacity="0.55"/>
+    <g stroke="#f3e830" stroke-width="1.6" fill="none">
+      <path d="M 0 -48 C -14 -38 -14 -28 0 -22 C 14 -28 14 -38 0 -48"/>
+      <path d="M 48 0 C 38 -14 28 -14 22 0 C 28 14 38 14 48 0"/>
+      <path d="M 0 48 C 14 38 14 28 0 22 C -14 28 -14 38 0 48"/>
+      <path d="M -48 0 C -38 14 -28 14 -22 0 C -28 -14 -38 -14 -48 0"/>
+    </g>
+    <circle cx="0" cy="-32" r="2.5" fill="#ffffff"/>
+    <circle cx="32" cy="0" r="2.5" fill="#ffffff"/>
+    <circle cx="0" cy="32" r="2.5" fill="#ffffff"/>
+    <circle cx="-32" cy="0" r="2.5" fill="#ffffff"/>
+    
+    <rect x="-3.5" y="-9" width="7" height="18" rx="1.5" fill="#f3e830"/>
+    <path d="M -3 -9 Q -10 -14 -18 -20" stroke="#f3e830" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <path d="M 0 -9 L 0 -20" stroke="#f3e830" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <path d="M 3 -9 Q 10 -14 18 -20" stroke="#f3e830" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <path d="M -3 9 Q -10 14 -18 20" stroke="#f3e830" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <path d="M 0 9 L 0 20" stroke="#f3e830" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <path d="M 3 9 Q 10 14 18 20" stroke="#f3e830" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <circle cx="-18" cy="-20" r="3.5" fill="#ffffff"/>
+    <circle cx="0" cy="-20" r="4" fill="#ffffff"/>
+    <circle cx="18" cy="-20" r="3.5" fill="#ffffff"/>
+    <circle cx="-18" cy="20" r="3.5" fill="#ffffff"/>
+    <circle cx="0" cy="20" r="4" fill="#ffffff"/>
+    <circle cx="18" cy="20" r="3.5" fill="#ffffff"/>
+    <circle cx="0" cy="0" r="5.5" fill="#214080" stroke="#f3e830" stroke-width="2"/>
+    <circle cx="0" cy="0" r="2.2" fill="#ffffff"/>
+  </g>
+</svg>

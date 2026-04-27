@@ -1,0 +1,85 @@
+/*
+ * East Coast Towing — app-bar (top header) styling.
+ * Companion to templates/app-bar.html.j2 and python/app_bar.py.
+ * Loaded via:  <link rel="stylesheet" href="/brand/css/brand-appbar.css">
+ *              after brand-tokens.css and brand-lockup.css.
+ *
+ * Class contract is stable across MINOR releases. Renaming requires MAJOR.
+ *
+ * Theme-aware tokens (--ect-nav-*) live in brand-tokens.css and swap
+ * automatically with :root.light / :root.dark.
+ */
+
+.ect-app-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ect-nav-border);
+  padding: 16px 32px;
+  position: sticky;
+  top: 0;
+  background: var(--ect-nav-bg);
+  z-index: 10;
+  font-family: var(--ect-font-sans);
+}
+
+.ect-app-bar__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  margin-left: 32px;
+}
+
+.ect-app-bar__nav-sep {
+  flex: 1;
+}
+
+/* Stable .nav-btn class for app-internal use (apps emit <a class="nav-btn">
+   inside the nav slot). Definition lifted from Heimdall/Huginn baseline. */
+.ect-app-bar .nav-btn,
+.ect-app-bar__nav-btn {
+  font-family: var(--ect-font-sans);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+  border: 1px solid var(--ect-nav-border);
+  color: var(--ect-nav-text);
+  background: none;
+}
+
+.ect-app-bar .nav-btn:hover,
+.ect-app-bar__nav-btn:hover {
+  color: var(--ect-nav-text-bright);
+  border-color: var(--ect-nav-text);
+}
+
+.ect-app-bar .nav-btn.active,
+.ect-app-bar__nav-btn.active {
+  background: var(--ect-nav-surface);
+  color: var(--ect-nav-text-bright);
+  border-color: var(--ect-nav-border);
+}
+
+/* .action modifier: theme-toggle and other icon-only buttons. Strips
+   background so the chip outline reads as an icon, not a labeled button. */
+.ect-app-bar .nav-btn.action,
+.ect-app-bar__nav-btn.action {
+  background: none;
+  color: var(--ect-nav-text);
+}
+
+.ect-app-bar__user {
+  font-family: var(--ect-font-sans);
+  font-size: 11px;
+  color: var(--ect-nav-text);
+  letter-spacing: 0.03em;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

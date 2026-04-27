@@ -54,6 +54,35 @@
   --ect-color-brand-primary:   var(--ect-yellow);
 }
 
+/* App-bar / nav semantic tokens (v1.4.0+). Hooked into the :root.light /
+   :root.dark classes set by js/theme-toggle.js. Default surface is dark
+   (matches the Heimdall/Huginn/Muninn baseline); :root.light flips. */
+:root {
+  --ect-nav-text:        #5a6478;   /* dim/idle nav link */
+  --ect-nav-text-bright: #e8edf5;   /* active/hover/user-name */
+  --ect-nav-border:      #2a3040;   /* nav-btn border */
+  --ect-nav-surface:     #111318;   /* active nav-btn background */
+  --ect-nav-bg:          #0a0c10;   /* header background */
+}
+
+:root.light {
+  --ect-nav-text:        #9ca3af;
+  --ect-nav-text-bright: #111827;
+  --ect-nav-border:      #c5cad6;
+  --ect-nav-surface:     #ffffff;
+  --ect-nav-bg:          #f4f6f9;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not(.dark) {
+    --ect-nav-text:        #9ca3af;
+    --ect-nav-text-bright: #111827;
+    --ect-nav-border:      #c5cad6;
+    --ect-nav-surface:     #ffffff;
+    --ect-nav-bg:          #f4f6f9;
+  }
+}
+
 /* Wordmark utility class — paired with a medallion in a header lockup. */
 .ect-wordmark {
   font-family: var(--ect-font-sans);

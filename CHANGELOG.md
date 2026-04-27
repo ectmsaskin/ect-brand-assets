@@ -7,6 +7,42 @@ This project follows [Semantic Versioning](https://semver.org/):
 - **MINOR** — new app added to the pantheon, new variant added, new file format. Backward compatible.
 - **PATCH** — visual refinement to an existing mark, color tweak within tolerance, file regeneration with no design change.
 
+## [1.4.0] — 2026-04-26
+
+### Added
+- **`templates/app-bar.html.j2`** — shared Jinja2 partial for the canonical
+  top header (Heimdall, Huginn, Muninn, Asgard). Composes the lockup,
+  holds a `primary_nav_html` slot, then `nav-sep` + theme-toggle + user
+  + logout cluster on the right.
+- **`python/app_bar.py`** — `render_app_bar()` Python helper for f-string
+  apps (Heimdall). Caller assembles the primary nav HTML separately.
+- **`css/brand-appbar.css`** — companion stylesheet defining the
+  `.ect-app-bar` class tree and the canonical `.nav-btn` styling
+  (`.active` and `.action` modifiers stable).
+- **Theme-aware semantic tokens** added to `brand-tokens.css`:
+  `--ect-nav-text`, `--ect-nav-text-bright`, `--ect-nav-border`,
+  `--ect-nav-surface`, `--ect-nav-bg`. Driven by `:root.light` /
+  `:root.dark` with `prefers-color-scheme` fallback.
+- Extended `tests/test_lockup_parity.py` with 4 app-bar parity cases +
+  escaping checks for `user_name` / `theme_toggle_label`.
+
+### Class contract
+The `.ect-app-bar` / `.ect-app-bar__nav` / `.ect-app-bar__nav-sep` /
+`.ect-app-bar__user` tree, plus `.nav-btn` / `.nav-btn.active` /
+`.nav-btn.action` inside it, are now stable. Renames are MAJOR.
+
+### Notes
+- Mimir is intentionally NOT migrated to the app-bar — its sidebar
+  layout is its primary nav and doesn't fit a top header. The
+  partial is for top-nav apps only.
+- Backward compatible: no existing files moved or renamed. Apps on
+  v1.3.0 can bump freely; lockup-only consumers don't pick up the
+  app-bar unless they `<link>` `brand-appbar.css`.
+- Apps adopting the app-bar should default to dark `:root` (with
+  `:root.light` overrides) to align with the new `--ect-nav-*` token
+  defaults. Muninn was the only outlier and gets aligned during its
+  v1.4.0 migration.
+
 ## [1.3.0] — 2026-04-26
 
 ### Added

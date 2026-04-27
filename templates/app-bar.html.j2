@@ -1,0 +1,40 @@
+{# ECT brand-assets v1.4.0 — top app-bar partial.
+   Composes the lockup, primary nav slot, theme toggle, user, and logout.
+
+   Required params:
+     app_key       lockup pantheon key
+     app_name      lockup wordmark text
+   Optional params:
+     tagline             lockup secondary text (default: "")
+     variant             lockup variant (default: "auto")
+     asset_base          lockup asset URL prefix (default: "/brand")
+     primary_nav_html    pre-rendered HTML for the primary nav slot (default: "")
+                         caller assembles role-gated <a class="nav-btn"> anchors
+     user_name           if non-empty, renders <span class="ect-app-bar__user">
+                         and a Logout link (default: "")
+     logout_href         logout URL (default: "/auth/logout")
+     theme_toggle_label  default text shown before JS sets it (default: "")
+
+   Class contract is stable across MINOR releases.
+   Mirror in python/app_bar.py — keep in sync (tests/test_lockup_parity.py). #}
+{%- set _tagline = tagline | default("") -%}
+{%- set _variant = variant | default("auto") -%}
+{%- set _asset_base = asset_base | default("/brand") -%}
+{%- set _primary_nav_html = primary_nav_html | default("") -%}
+{%- set _user_name = user_name | default("") -%}
+{%- set _logout_href = logout_href | default("/auth/logout") -%}
+{%- set _toggle_label = theme_toggle_label | default("") -%}
+<header class="ect-app-bar">
+  {%- with app_key=app_key, app_name=app_name, tagline=_tagline, variant=_variant, asset_base=_asset_base %}
+    {%- include 'lockup.html.j2' %}
+  {%- endwith %}
+  <div class="ect-app-bar__nav">
+    {{- _primary_nav_html | safe -}}
+    <span class="ect-app-bar__nav-sep"></span>
+    <button id="theme-toggle" class="nav-btn action" onclick="toggleTheme()" type="button">{{ _toggle_label }}</button>
+    {%- if _user_name %}
+    <span class="ect-app-bar__user">{{ _user_name }}</span>
+    <a href="{{ _logout_href }}" class="nav-btn">Logout</a>
+    {%- endif %}
+  </div>
+</header>

@@ -43,13 +43,16 @@ ect_pantheon/
 │   └── {app}.ico                  ← 6 multi-resolution .ico (16/32/48/64/128/256)
 ├── css/
 │   ├── brand-tokens.css           ← canonical CSS variables (v1.2.0+)
-│   └── brand-lockup.css           ← lockup component styling (v1.3.0+)
+│   ├── brand-lockup.css           ← lockup component styling (v1.3.0+)
+│   └── brand-appbar.css           ← top app-bar styling (v1.4.0+)
 ├── js/
 │   └── theme-toggle.js            ← shared dark/light toggle (v1.2.0+)
 ├── templates/
-│   └── lockup.html.j2             ← Jinja partial for the medallion+wordmark lockup
+│   ├── lockup.html.j2             ← Jinja partial for the medallion+wordmark lockup
+│   └── app-bar.html.j2            ← Jinja partial for the top header (v1.4.0+)
 ├── python/
-│   └── lockup.py                  ← Python render_lockup() helper (parity with Jinja)
+│   ├── lockup.py                  ← Python render_lockup() helper
+│   └── app_bar.py                 ← Python render_app_bar() helper (v1.4.0+)
 ├── tests/
 │   └── test_lockup_parity.py      ← asserts Jinja and Python emit equivalent HTML
 ├── reference/

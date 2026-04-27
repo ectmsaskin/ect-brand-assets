@@ -208,6 +208,104 @@ return f"""<header>{render_lockup("heimdall", "HEIMDALL", "Scorecard Admin")}</h
 
 Renaming any of these is a MAJOR. Apps may rely on these for overrides.
 
+## App-bar (v1.4.0+)
+
+The app-bar is the canonical top header for the apps that use a top-nav
+layout (Heimdall, Huginn, Muninn, Asgard). It composes the lockup,
+holds a slot for app-specific primary nav, and standardizes the
+theme-toggle / user / logout cluster on the right.
+
+Mimir intentionally does NOT use the app-bar — its sidebar is the
+primary nav for a chat-app surface, which doesn't fit a top header.
+
+Load the companion stylesheets (in this order — appbar depends on
+both):
+
+```html
+<link rel="stylesheet" href="/brand/css/brand-tokens.css">
+<link rel="stylesheet" href="/brand/css/brand-lockup.css">
+<link rel="stylesheet" href="/brand/css/brand-appbar.css">
+```
+
+### Jinja apps
+
+```jinja
+{%- set primary_nav_html %}
+  <a href="{{ url_for('dashboard.calls') }}" class="nav-btn {% if active=='calls' %}active{% endif %}">Calls</a>
+  <a href="{{ url_for('admin.users') }}" class="nav-btn {% if active=='users' %}active{% endif %}">Users</a>
+{% endset %}
+{% with app_key="huginn", app_name="HUGINN", tagline="Call attribution",
+        primary_nav_html=primary_nav_html,
+        user_name=current_user.name %}
+  {% include 'app-bar.html.j2' %}
+{% endwith %}
+```
+
+Apps role-gate links inside `primary_nav_html` themselves (with
+`{% if user.is_admin %}...{% endif %}`); the partial doesn't try to
+read role state.
+
+### f-string apps (Heimdall)
+
+```python
+from branding import render_app_bar, build_primary_nav
+
+html = f"""<!DOCTYPE html>
+<html>
+<head>...</head>
+<body>
+{render_app_bar(
+    app_key='heimdall',
+    app_name='HEIMDALL',
+    tagline='Scorecard Admin',
+    primary_nav_html=build_primary_nav(active='scorecard'),
+    user_name=g.user.name,
+)}
+<main>...</main>
+</body></html>
+"""
+```
+
+### Parameters
+
+| Param | Default | Notes |
+|---|---|---|
+| `app_key` | required | Pantheon key (passes through to lockup). |
+| `app_name` | required | Wordmark text (passes through to lockup). |
+| `tagline` | `""` | Lockup tagline. |
+| `variant` | `"auto"` | Lockup variant. |
+| `asset_base` | `"/brand"` | Lockup asset URL prefix. |
+| `primary_nav_html` | `""` | Pre-rendered HTML for the nav slot. Caller is responsible for HTML-escaping any user-supplied content inside. |
+| `user_name` | `""` | When non-empty, renders user span + Logout link. |
+| `logout_href` | `"/auth/logout"` | Logout URL. |
+| `theme_toggle_label` | `""` | Default text shown before theme-toggle.js sets it. Empty is fine — JS fills it on `DOMContentLoaded`. |
+
+### Class contract
+
+```
+.ect-app-bar
+  (lockup goes here)
+  .ect-app-bar__nav
+    (caller's primary_nav_html with .nav-btn anchors)
+    .ect-app-bar__nav-sep    /* flex spacer pushing user info right */
+    button#theme-toggle.nav-btn.action
+    .ect-app-bar__user
+    a.nav-btn                /* Logout */
+```
+
+`.nav-btn` styling lives in `brand-appbar.css` and is consistent
+across all apps using the partial. Modifiers `.active` (filled
+surface bg) and `.action` (transparent bg, used for icon-only
+toggle) are stable and load-bearing.
+
+### Theme-aware tokens
+
+`brand-tokens.css` v1.4.0 added `--ect-nav-text`, `--ect-nav-text-bright`,
+`--ect-nav-border`, `--ect-nav-surface`, `--ect-nav-bg` semantic tokens.
+They're driven by `:root.light` / `:root.dark` (set by theme-toggle.js)
+with `prefers-color-scheme` as fallback. Apps don't need to define these —
+they inherit them from `brand-tokens.css`.
+
 ## Don't
 
 - Don't recolor the medallions outside the palette.

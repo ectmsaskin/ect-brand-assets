@@ -71,3 +71,55 @@ Override with `variant="light"`, `"dark"`, or `"icon"` when:
 
 Don't pass `variant="icon"` inside in-product chrome — it's too
 loud. Use light or dark.
+
+## Navigation: app-bar vs sidebar
+
+The pantheon doesn't try to make every app look identical — it
+makes them feel like siblings. The app-bar is the strongest signal
+of that family resemblance, and it's the right pattern for any
+app whose information architecture fits on a top horizontal nav
+(roughly: ≤7 primary destinations, no list-primary content area).
+
+**Apps that should use the app-bar partial:**
+
+- Heimdall, Huginn, Muninn, Asgard
+
+**Apps that should NOT:**
+
+- Mimir — its primary nav is the conversation list; a sidebar is
+  the right read for a chat surface.
+- Future apps that are list-primary (file browser, ticket queue,
+  inbox) or have many primary destinations (≥10). Build a sidebar.
+
+The app-bar standardizes:
+
+- Identity (lockup, top-left)
+- Primary nav (caller-controlled HTML slot, immediately right of
+  the lockup, role-gated by the app)
+- A flex spacer (`.ect-app-bar__nav-sep`) pushing system actions
+  to the far right
+- System actions cluster (theme toggle → user name → logout)
+
+### When to add an item to the primary nav vs to a per-page menu
+
+The primary nav is for destinations a user reaches multiple times
+per session. One-shot actions (export, settings page that's edited
+rarely, admin entry points) are better as a dropdown / overflow
+menu inside the nav, not a top-level link. Heimdall historically
+crammed too many items into the primary nav; if you find yourself
+adding a 7th or 8th, ask whether some belong in an overflow.
+
+### Active-state convention
+
+Exactly one nav-btn should have `.active` per page. The class is
+applied by the caller (the partial doesn't know what page the
+user is on). The visual is "filled with `--ect-nav-surface`,
+brighter text, normal border" — matches the established
+Heimdall/Huginn pattern.
+
+### Theme toggle
+
+Always renders. The button is icon-only — `theme-toggle.js` fills
+in `☀ Light` / `☽ Dark` on `DOMContentLoaded`. Don't pre-fill the
+label in markup unless you have a reason; the JS will overwrite
+it after first paint and an empty button is fine in the meantime.

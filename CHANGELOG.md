@@ -7,6 +7,26 @@ This project follows [Semantic Versioning](https://semver.org/):
 - **MINOR** — new app added to the pantheon, new variant added, new file format. Backward compatible.
 - **PATCH** — visual refinement to an existing mark, color tweak within tolerance, file regeneration with no design change.
 
+## [1.2.0] — 2026-04-26
+
+### Added
+- **`css/brand-tokens.css`** — the seven canonical palette variables
+  (`--ect-blue`, `--ect-yellow`, `--ect-yellow-soft`, `--ect-black`,
+  `--ect-gray-700`, `--ect-gray-500`, `--ect-gray-200`) plus
+  Montserrat as the canonical sans + a small set of semantic aliases
+  (`--ect-color-text-primary` etc.). Apps `<link>` this from the
+  submodule and stop redefining the tokens in their own stylesheets.
+- **`js/theme-toggle.js`** — extracted shared theme-toggle script.
+  Adds `.light` / `.dark` to `<html>` based on localStorage, with
+  `prefers-color-scheme` as a fallback. Apps `<script src=...>` it
+  instead of copy-pasting the same JS into every base.html.
+
+### Notes
+- Backward compatible: no existing files moved or renamed. Apps on
+  v1.1.0 can bump freely; the new files are additive.
+- The `<button id="theme-toggle">` element is the contract — name your
+  toggle that ID and the script wires up automatically.
+
 ## [1.1.0] — 2026-04-26
 
 ### Added

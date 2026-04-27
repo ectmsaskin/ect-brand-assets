@@ -1,0 +1,75 @@
+/*
+ * East Coast Towing — canonical brand tokens.
+ * Source of truth. Do not redefine these values elsewhere.
+ *
+ * For non-CSS stacks (Tailwind config, MUI theme, design system tokens, native
+ * iOS/Android color resources, etc.), translate these to your token system but
+ * keep the names. The names are the contract; the medium is incidental.
+ */
+
+:root {
+  /* Primary palette */
+  --ect-blue:        #214080;   /* primary; medallion strokes; icon backgrounds */
+  --ect-yellow:      #f3e830;   /* accent; highlights; medallion in icon variant */
+  --ect-yellow-soft: #f6f46f;   /* hover; subtle backgrounds */
+
+  /* Neutrals */
+  --ect-black:       #231f20;   /* body text; dark surfaces */
+  --ect-gray-700:    #757575;   /* secondary text; dividers */
+  --ect-gray-500:    #acacac;   /* borders; disabled states */
+  --ect-gray-200:    #e4e4e4;   /* page backgrounds; light surfaces */
+
+  /* Type */
+  --ect-font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+
+  /* Semantic aliases — use these in components instead of raw color tokens
+     where the meaning matters. Easier to retheme later if needed. */
+  --ect-color-text-primary:    var(--ect-black);
+  --ect-color-text-secondary:  var(--ect-gray-700);
+  --ect-color-text-disabled:   var(--ect-gray-500);
+  --ect-color-bg-page:         var(--ect-gray-200);
+  --ect-color-bg-surface:      #ffffff;
+  --ect-color-border-subtle:   var(--ect-gray-500);
+  --ect-color-brand-primary:   var(--ect-blue);
+  --ect-color-brand-accent:    var(--ect-yellow);
+}
+
+/* Dark mode swap. Apps should add the `data-theme="dark"` attribute on <html>
+   or rely on prefers-color-scheme depending on framework convention. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ect-color-text-primary:    var(--ect-gray-200);
+    --ect-color-text-secondary:  var(--ect-gray-500);
+    --ect-color-bg-page:         var(--ect-black);
+    --ect-color-bg-surface:      #2a2520;
+    --ect-color-brand-primary:   var(--ect-yellow);  /* yellow is the high-contrast brand on dark */
+  }
+}
+
+[data-theme="dark"] {
+  --ect-color-text-primary:    var(--ect-gray-200);
+  --ect-color-text-secondary:  var(--ect-gray-500);
+  --ect-color-bg-page:         var(--ect-black);
+  --ect-color-bg-surface:      #2a2520;
+  --ect-color-brand-primary:   var(--ect-yellow);
+}
+
+/* Wordmark utility class — paired with a medallion in a header lockup. */
+.ect-wordmark {
+  font-family: var(--ect-font-sans);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ect-color-brand-primary);
+}
+
+.ect-wordmark__tag {
+  display: block;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  color: var(--ect-color-text-secondary);
+  margin-top: 2px;
+}

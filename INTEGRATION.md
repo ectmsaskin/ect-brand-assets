@@ -66,19 +66,66 @@ Use the right variant for each context. **Do not deviate.**
 
 ## Brand colors (CSS variables)
 
+As of v1.2.0 the canonical tokens live in **`css/brand-tokens.css`**.
+`<link>` it from your `<head>` (via your serving alias for the
+submodule path):
+
+```html
+<link rel="stylesheet" href="/brand/css/brand-tokens.css">
+```
+
+Apps stop redefining these values themselves — the `<link>` is the
+single source of truth. The seven tokens, for reference:
+
 ```css
-:root {
-  --ect-blue:        #214080; /* primary */
-  --ect-yellow:      #f3e830; /* accent */
-  --ect-yellow-soft: #f6f46f;
-  --ect-black:       #231f20;
-  --ect-gray-700:    #757575;
-  --ect-gray-500:    #acacac;
-  --ect-gray-200:    #e4e4e4;
-}
+--ect-blue:        #214080; /* primary */
+--ect-yellow:      #f3e830; /* accent */
+--ect-yellow-soft: #f6f46f;
+--ect-black:       #231f20;
+--ect-gray-700:    #757575;
+--ect-gray-500:    #acacac;
+--ect-gray-200:    #e4e4e4;
 ```
 
 Typeface: **Montserrat** (semibold for wordmarks, regular for body).
+The `--ect-font-sans` token in `brand-tokens.css` declares it; load
+the actual font file via Google Fonts in your `<head>`.
+
+## Theme toggle (dark / light)
+
+As of v1.2.0 the shared theme-toggle script lives at
+**`js/theme-toggle.js`**. Drop it into your `<head>`:
+
+```html
+<script src="/brand/js/theme-toggle.js"></script>
+```
+
+Then anywhere a user can click:
+
+```html
+<button id="theme-toggle" onclick="toggleTheme()" type="button">☀ Light</button>
+```
+
+The script:
+- reads `localStorage.ect-theme` synchronously on load (no flash of
+  wrong palette);
+- toggles `.light` / `.dark` on `<html>`;
+- updates the button label to indicate the **opposite** theme;
+- defers to `prefers-color-scheme` when the user hasn't picked.
+
+For the toggle to actually flip colors, your app stylesheet must
+provide both branches:
+
+```css
+:root.dark   { /* dark values */ }
+:root.light  { /* light values */ }
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) { /* dark values */ }
+}
+```
+
+The `:not(.light)` clause is what makes the explicit user choice win
+over OS preference.
 
 ## Wordmark
 

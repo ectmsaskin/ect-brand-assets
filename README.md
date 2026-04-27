@@ -26,6 +26,10 @@ Plus the **Asgard** mark — the home of the gods. Used by `asgard.eastcoasttowi
 ```
 ect_pantheon/
 ├── README.md                      ← this file
+├── BRAND.md                       ← design notes (lockup intent, casing, taglines)
+├── INTEGRATION.md                 ← how downstream apps consume this kit
+├── CHANGELOG.md                   ← release notes
+├── VERSION                        ← single-line version pin
 ├── svg/
 │   ├── light/{app}.svg            ← 6 light-variant masters
 │   ├── dark/{app}.svg             ← 6 dark-variant masters
@@ -37,6 +41,17 @@ ect_pantheon/
 │       Sizes: 1024, 512, 256, 128, 64, 32, 16 px
 ├── favicon/
 │   └── {app}.ico                  ← 6 multi-resolution .ico (16/32/48/64/128/256)
+├── css/
+│   ├── brand-tokens.css           ← canonical CSS variables (v1.2.0+)
+│   └── brand-lockup.css           ← lockup component styling (v1.3.0+)
+├── js/
+│   └── theme-toggle.js            ← shared dark/light toggle (v1.2.0+)
+├── templates/
+│   └── lockup.html.j2             ← Jinja partial for the medallion+wordmark lockup
+├── python/
+│   └── lockup.py                  ← Python render_lockup() helper (parity with Jinja)
+├── tests/
+│   └── test_lockup_parity.py      ← asserts Jinja and Python emit equivalent HTML
 ├── reference/
 │   └── ect_pantheon_brand_reference.html   ← printable brand reference
 └── build_*.py                     ← regeneration scripts

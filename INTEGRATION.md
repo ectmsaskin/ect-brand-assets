@@ -127,27 +127,86 @@ provide both branches:
 The `:not(.light)` clause is what makes the explicit user choice win
 over OS preference.
 
-## Wordmark
+## Lockup (v1.3.0+)
 
-When pairing the medallion with the app name in a header, navigation, or hero:
+The medallion + wordmark lockup is now a shared partial. Apps stop
+hand-rolling the markup — `<include>` the partial (Jinja apps) or call
+`render_lockup()` (f-string apps).
+
+Load the companion stylesheet alongside `brand-tokens.css`:
 
 ```html
-<div class="brand-lockup">
-  <img src="vendor/ect-brand-assets/svg/light/heimdall.svg" alt="" class="medallion">
-  <div class="wordmark">
-    <div class="name">HEIMDALL</div>
-    <div class="tag">QA pipeline</div>
-  </div>
-</div>
+<link rel="stylesheet" href="/brand/css/brand-tokens.css">
+<link rel="stylesheet" href="/brand/css/brand-lockup.css">
 ```
 
-```css
-.medallion        { width: 48px; height: 48px; }
-.wordmark .name   { font: 700 22px/1 Montserrat; letter-spacing: 3px; color: var(--ect-blue); }
-.wordmark .tag    { font: 400 12px/1 Montserrat; color: var(--ect-gray-700); }
+### Jinja apps
+
+Wire the partial directory into the Flask app's loader once:
+
+```python
+import jinja2
+app.jinja_loader = jinja2.ChoiceLoader([
+    app.jinja_loader,
+    jinja2.FileSystemLoader('vendor/ect-brand-assets/templates'),
+])
 ```
 
-On dark surfaces, swap medallion to `svg/dark/{app}.svg` and `.name` color to `var(--ect-yellow)`.
+Then in any template:
+
+```jinja
+{% with app_key="huginn", app_name="HUGINN", tagline="Call attribution · raven of thought" %}
+  {% include 'lockup.html.j2' %}
+{% endwith %}
+```
+
+### f-string / non-Jinja apps
+
+Load `python/lockup.py` from the submodule (the hyphenated path isn't
+a valid Python package name, so import via `importlib`):
+
+```python
+import importlib.util, pathlib
+_path = pathlib.Path(__file__).parent / "vendor" / "ect-brand-assets" / "python" / "lockup.py"
+_spec = importlib.util.spec_from_file_location("ect_brand_lockup", _path)
+_mod = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+render_lockup = _mod.render_lockup
+```
+
+Then interpolate in your HTML f-string:
+
+```python
+return f"""<header>{render_lockup("heimdall", "HEIMDALL", "Scorecard Admin")}</header>..."""
+```
+
+### Parameters
+
+| Param | Default | Notes |
+|---|---|---|
+| `app_key` | required | Pantheon key, lowercase: `heimdall`, `huginn`, `muninn`, `mimir`, `bifrost`, `yggdrasil`, `asgard`. |
+| `app_name` | required | Wordmark text. CSS uppercases it; pass any case. |
+| `tagline` | `""` | Optional secondary line. Empty string suppresses it. |
+| `variant` | `"auto"` | `"light"`, `"dark"`, `"icon"`, or `"auto"` (emits both light+dark with CSS theme-swap). |
+| `asset_base` | `"/brand"` | URL prefix for SVGs. Override only if you mount the submodule somewhere else. |
+| `medallion_alt` | `""` | Alt text. Empty (default) marks the medallion decorative. |
+| `modifier` | `""` | Extra class on the lockup container. Use `"ect-brand-lockup--compact"` for sidebars. |
+
+### Class contract (stable across MINOR releases)
+
+```
+.ect-brand-lockup
+  .ect-brand-lockup__medallion
+    .ect-brand-lockup__medallion--light
+    .ect-brand-lockup__medallion--dark
+  .ect-brand-lockup__wordmark
+    .ect-brand-lockup__name
+    .ect-brand-lockup__tag
+
+.ect-brand-lockup--compact   /* modifier */
+```
+
+Renaming any of these is a MAJOR. Apps may rely on these for overrides.
 
 ## Don't
 

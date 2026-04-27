@@ -1,0 +1,24 @@
+{# ECT brand-assets v1.3.0 — medallion + wordmark lockup
+   Params: app_key, app_name, tagline="", variant="auto",
+           asset_base="/brand", medallion_alt="", modifier=""
+   Class contract is stable across MINOR releases. Renaming requires MAJOR.
+   Mirror in python/lockup.py — keep in sync, see tests/test_lockup_parity.py. #}
+{%- set _variant = variant | default("auto") -%}
+{%- set _asset_base = (asset_base | default("/brand")).rstrip("/") -%}
+{%- set _alt = medallion_alt | default("") -%}
+{%- set _aria = "true" if not _alt else "false" -%}
+{%- set _modifier = modifier | default("") -%}
+<div class="ect-brand-lockup{% if _modifier %} {{ _modifier }}{% endif %}" data-app="{{ app_key }}">
+  {%- if _variant == "auto" %}
+  <img class="ect-brand-lockup__medallion ect-brand-lockup__medallion--light" src="{{ _asset_base }}/svg/light/{{ app_key }}.svg" alt="{{ _alt }}" aria-hidden="{{ _aria }}">
+  <img class="ect-brand-lockup__medallion ect-brand-lockup__medallion--dark" src="{{ _asset_base }}/svg/dark/{{ app_key }}.svg" alt="{{ _alt }}" aria-hidden="{{ _aria }}">
+  {%- else %}
+  <img class="ect-brand-lockup__medallion" src="{{ _asset_base }}/svg/{{ _variant }}/{{ app_key }}.svg" alt="{{ _alt }}" aria-hidden="{{ _aria }}">
+  {%- endif %}
+  <div class="ect-brand-lockup__wordmark">
+    <div class="ect-brand-lockup__name">{{ app_name }}</div>
+    {%- if tagline %}
+    <div class="ect-brand-lockup__tag">{{ tagline }}</div>
+    {%- endif %}
+  </div>
+</div>

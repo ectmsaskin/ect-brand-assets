@@ -7,6 +7,38 @@ This project follows [Semantic Versioning](https://semver.org/):
 - **MINOR** — new app added to the pantheon, new variant added, new file format. Backward compatible.
 - **PATCH** — visual refinement to an existing mark, color tweak within tolerance, file regeneration with no design change.
 
+## [1.3.0] — 2026-04-26
+
+### Added
+- **`templates/lockup.html.j2`** — shared Jinja2 partial for the
+  canonical medallion + wordmark lockup. Apps `{% include %}` it
+  instead of hand-rolling `<div class="logo">` markup. Parameters:
+  `app_key`, `app_name`, `tagline`, `variant`, `asset_base`,
+  `medallion_alt`, `modifier`.
+- **`python/lockup.py`** — `render_lockup()` Python helper that emits
+  the same HTML contract for codebases that don't use Jinja
+  (currently ect-qa). Both must be updated together.
+- **`css/brand-lockup.css`** — companion stylesheet defining the
+  `.ect-brand-lockup` class tree, theme-swap behavior, and a
+  `--compact` modifier. Apps `<link>` it after `brand-tokens.css`.
+- **`BRAND.md`** — design notes documenting lockup intent, wordmark
+  casing convention, tagline pattern, and "when not to use the lockup."
+- **`tests/test_lockup_parity.py`** — asserts the Jinja partial and
+  Python helper emit equivalent HTML across 8 cases + verifies HTML
+  escaping. Runnable as a plain script (no pytest required).
+
+### Class contract
+The `.ect-brand-lockup` class tree (`__medallion`, `__wordmark`,
+`__name`, `__tag`, `--light`, `--dark`, `--compact`) is now stable.
+Renaming any of these is MAJOR.
+
+### Notes
+- Backward compatible: no existing files moved or renamed. Apps on
+  v1.2.0 can bump freely; lockup files are additive.
+- The `.ect-wordmark` / `.ect-wordmark__tag` rules in `brand-tokens.css`
+  (added v1.2.0, never adopted) are deprecated in favor of
+  `.ect-brand-lockup__name` / `__tag`. Removal targeted for v2.0.0.
+
 ## [1.2.0] — 2026-04-26
 
 ### Added

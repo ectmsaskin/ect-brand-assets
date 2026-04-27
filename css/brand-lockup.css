@@ -1,0 +1,77 @@
+/*
+ * East Coast Towing — medallion + wordmark lockup styling.
+ * Companion to templates/lockup.html.j2 and python/lockup.py.
+ * Loaded via:  <link rel="stylesheet" href="/brand/css/brand-lockup.css">
+ *              after brand-tokens.css (depends on its CSS variables).
+ *
+ * Class contract is stable across MINOR releases. Renaming requires MAJOR.
+ *
+ * Theme swap convention: apps using js/theme-toggle.js get .light / .dark
+ * classes on <html>. Default surface is dark; .light flips to light mode.
+ * prefers-color-scheme is the OS-preference fallback.
+ */
+
+.ect-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ect-brand-lockup__medallion {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+/* Auto-variant: emit both medallions, show one based on theme. */
+.ect-brand-lockup__medallion--light { display: none; }
+.ect-brand-lockup__medallion--dark  { display: block; }
+
+:root.light .ect-brand-lockup__medallion--light { display: block; }
+:root.light .ect-brand-lockup__medallion--dark  { display: none; }
+
+@media (prefers-color-scheme: light) {
+  :root:not(.dark) .ect-brand-lockup__medallion--light { display: block; }
+  :root:not(.dark) .ect-brand-lockup__medallion--dark  { display: none; }
+}
+
+.ect-brand-lockup__wordmark {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1;
+}
+
+.ect-brand-lockup__name {
+  font-family: var(--ect-font-sans);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ect-yellow);
+}
+
+:root.light .ect-brand-lockup__name { color: var(--ect-blue); }
+
+@media (prefers-color-scheme: light) {
+  :root:not(.dark) .ect-brand-lockup__name { color: var(--ect-blue); }
+}
+
+.ect-brand-lockup__tag {
+  font-family: var(--ect-font-sans);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: var(--ect-gray-500);
+}
+
+:root.light .ect-brand-lockup__tag { color: var(--ect-gray-700); }
+
+@media (prefers-color-scheme: light) {
+  :root:not(.dark) .ect-brand-lockup__tag { color: var(--ect-gray-700); }
+}
+
+/* Compact modifier — for sidebars and dense surfaces. */
+.ect-brand-lockup--compact .ect-brand-lockup__medallion { width: 36px; height: 36px; }
+.ect-brand-lockup--compact .ect-brand-lockup__name      { font-size: 16px; letter-spacing: 2px; }
+.ect-brand-lockup--compact .ect-brand-lockup__tag       { font-size: 11px; }

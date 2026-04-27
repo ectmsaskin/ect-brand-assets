@@ -14,8 +14,8 @@ APPS = [
     ("mimir", "Business intelligence", "Guardian of the well of wisdom. Queried for insight."),
 ]
 
-# Asgard is the toolbox's own mark — the parent surface, not a member of the pantheon.
-ASGARD = ("asgard", "Toolbox · the realm of the gods", "Central citadel surrounded by six realm orbs. The home where the pantheon gathers.")
+# Asgard is the portal mark — the parent surface, not a member of the pantheon.
+ASGARD = ("asgard", "Asgard · the realm of the gods", "Central citadel surrounded by six realm orbs. The home where the pantheon gathers.")
 
 COLORS = [
     ("#214080", "primary blue", "buttons, headers, primary marks"),
@@ -323,7 +323,7 @@ footer.file-index code {{
   <header class="title-block">
     <div class="eyebrow">East Coast Towing · Brand Reference</div>
     <h1>The Application Pantheon</h1>
-    <p>Norse-themed naming and identity system for ECT internal applications. Six apps plus the Asgard toolbox mark, three color variants each, designed as a unified medallion family.</p>
+    <p>Norse-themed naming and identity system for ECT internal applications. Six apps plus the Asgard portal mark, three color variants each, designed as a unified medallion family.</p>
   </header>
 
   <section>
@@ -339,8 +339,8 @@ footer.file-index code {{
   </section>
 
   <section>
-    <h2>Asgard · the toolbox mark</h2>
-    <p style="font-size:13px;color:#757575;margin-bottom:16px;line-height:1.6">Asgard is the home of the gods — the realm where the pantheon gathers. It is the canonical mark for <strong style="color:#214080">toolbox.eastcoasttowing.com</strong>, the parent portal that displays all six apps. Asgard is NOT a member of the pantheon directory itself; it represents the directory.</p>
+    <h2>Asgard · the portal mark</h2>
+    <p style="font-size:13px;color:#757575;margin-bottom:16px;line-height:1.6">Asgard is the home of the gods — the realm where the pantheon gathers. It is the canonical mark for <strong style="color:#214080">asgard.eastcoasttowing.com</strong>, the parent portal that displays all six apps. Asgard is NOT a member of the pantheon directory itself; it represents the directory.</p>
     {asgard_row}
   </section>
 
@@ -379,7 +379,7 @@ footer.file-index code {{
     <code>favicon/{{slug}}.ico</code> — 7 multi-resolution Windows-style favicons<br>
     <br>
     Pantheon apps: heimdall · huginn · muninn · bifrost · yggdrasil · mimir<br>
-    Toolbox mark: asgard
+    Asgard mark: asgard
   </footer>
 
 </div>

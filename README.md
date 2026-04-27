@@ -13,7 +13,7 @@ Norse-themed identity system for East Coast Towing's internal applications. Six 
 | **Yggdrasil** | Data warehouse | World tree; structural foundation of the data realms |
 | **Mimir** | Business intelligence | Guardian of the well of wisdom; queried for insight |
 
-Plus the **Asgard** mark — the home of the gods. Used by `toolbox.eastcoasttowing.com`, the parent portal that displays the pantheon. Asgard is *not* a pantheon member; it represents the pantheon collectively.
+Plus the **Asgard** mark — the home of the gods. Used by `asgard.eastcoasttowing.com`, the parent portal that displays the pantheon. Asgard is *not* a pantheon member; it represents the pantheon collectively.
 
 ## Three variants per app
 

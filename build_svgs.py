@@ -14,7 +14,7 @@ DESCRIPTIONS = {
     "bifrost": "Integrations and ETL. Three nested arches of the rainbow bridge.",
     "yggdrasil": "Data warehouse. Stylized world tree with realm orbs.",
     "mimir": "Business intelligence. Chalice of wisdom from the well.",
-    "asgard": "Toolbox. Central citadel surrounded by six realm orbs — the home of the pantheon.",
+    "asgard": "Asgard. Central citadel surrounded by six realm orbs — the home of the pantheon.",
 }
 
 VARIANTS = {

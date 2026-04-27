@@ -10,11 +10,11 @@ This project follows [Semantic Versioning](https://semver.org/):
 ## [1.1.0] — 2026-04-26
 
 ### Added
-- **Asgard medallion** — the toolbox's own mark. Central citadel keep + six realm orbs in hexagonal halo, representing the home of the pantheon. Used by `toolbox.eastcoasttowing.com` and any future parent surface that represents the pantheon collectively.
+- **Asgard medallion** — the portal mark. Central citadel keep + six realm orbs in hexagonal halo, representing the home of the pantheon. Used by `asgard.eastcoasttowing.com` and any future parent surface that represents the pantheon collectively.
 - 3 new SVG masters (`svg/{light,dark,icon}/asgard.svg`).
 - 21 new PNG renders for Asgard at all 7 sizes across all 3 variants.
 - 1 new multi-resolution `.ico` favicon (`favicon/asgard.ico`).
-- Asgard section in the brand reference HTML, clearly labeled as the toolbox mark (not a pantheon member).
+- Asgard section in the brand reference HTML, clearly labeled as the portal mark (not a pantheon member).
 
 ### Notes
 - Asgard is **not** a pantheon app. Don't include it in app directory grids alongside Heimdall/Huginn/etc. — it represents the directory.

@@ -62,7 +62,7 @@ Use the right variant for each context. **Do not deviate.**
 | In-product header / sidebar (dark theme) | dark | `svg/dark/{app}.svg` |
 | README hero / docs | light | `svg/light/{app}.svg` |
 | Loading / empty state | match theme | corresponding `svg/{variant}/{app}.svg` |
-| **Toolbox** parent portal (toolbox.eastcoasttowing.com) | any | `svg/{variant}/asgard.svg` — Asgard is the toolbox's own mark, not a pantheon member |
+| **Asgard** parent portal (asgard.eastcoasttowing.com) | any | `svg/{variant}/asgard.svg` — Asgard is the portal mark, not a pantheon member |
 
 ## Brand colors (CSS variables)
 

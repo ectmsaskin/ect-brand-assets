@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT))
 from jinja2 import Environment, FileSystemLoader
 from python.lockup import render_lockup
 from python.app_bar import render_app_bar
+from python.impersonation_banner import render_impersonation_banner
 
 
 def _normalize(html: str) -> str:
@@ -118,8 +119,70 @@ def test_html_escaping():
     assert "Light &amp; Dark" in out, "theme_toggle_label not escaped"
 
 
+IMPERSONATION_CASES = [
+    {"impersonated_by": "", "current_user_email": ""},  # not impersonating — empty
+    {
+        "impersonated_by": "msaskin@eastcoasttowing.com",
+        "current_user_email": "rvarner@eastcoasttowing.com",
+    },
+    {
+        "impersonated_by": "boss@eastcoasttowing.com",
+        "current_user_email": "intern@eastcoasttowing.com",
+        "asgard_admin_url": "https://asgard.example.com/admin/users",
+    },
+]
+
+
+def test_impersonation_banner_parity():
+    env = _env()
+    template = env.get_template("impersonation-banner.html.j2")
+    for kwargs in IMPERSONATION_CASES:
+        # Jinja partial reads from request.headers — simulate via a dict.
+        class _Req:
+            def __init__(self, headers):
+                self.headers = headers
+
+        class _User:
+            def __init__(self, email):
+                self.email = email
+                self.is_authenticated = bool(email)
+
+        render_kwargs = {
+            "request": _Req({"X-Impersonated-By": kwargs["impersonated_by"]}),
+            "current_user": _User(kwargs["current_user_email"]),
+        }
+        if "asgard_admin_url" in kwargs:
+            render_kwargs["asgard_admin_url"] = kwargs["asgard_admin_url"]
+        jinja_html = template.render(**render_kwargs)
+        py_kwargs = {k: v for k, v in kwargs.items() if v != ""}
+        if "impersonated_by" not in py_kwargs:
+            py_kwargs["impersonated_by"] = ""
+        if "current_user_email" not in py_kwargs:
+            py_kwargs["current_user_email"] = ""
+        python_html = render_impersonation_banner(**py_kwargs)
+        assert _normalize(jinja_html) == _normalize(python_html), (
+            f"\n  case:   {kwargs}"
+            f"\n  JINJA:  {_normalize(jinja_html)!r}"
+            f"\n  PYTHON: {_normalize(python_html)!r}"
+        )
+
+
+def test_impersonation_banner_escaping():
+    """Both arms must HTML-escape user-controlled values."""
+    out = render_impersonation_banner(
+        impersonated_by='evil@example.com<script>alert(1)</script>',
+        current_user_email='target@example.com" onclick="x',
+    )
+    assert "<script>" not in out
+    assert "&lt;script&gt;" in out
+    assert "&quot;" in out
+
+
 if __name__ == "__main__":
     test_lockup_parity()
     test_appbar_parity()
+    test_impersonation_banner_parity()
     test_html_escaping()
-    print(f"OK — {len(LOCKUP_CASES)} lockup + {len(APPBAR_CASES)} app-bar parity cases + escaping checks passed")
+    test_impersonation_banner_escaping()
+    print(f"OK — {len(LOCKUP_CASES)} lockup + {len(APPBAR_CASES)} app-bar + "
+          f"{len(IMPERSONATION_CASES)} impersonation parity cases + escaping checks passed")

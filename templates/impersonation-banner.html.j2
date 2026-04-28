@@ -1,0 +1,25 @@
+{# ECT brand-assets v1.5.0 — sticky banner shown when a super-admin is
+   impersonating the current user. Reads from request.headers (set by
+   nginx auth_request → asgard /auth/verify when X-Impersonated-By
+   is present in the response).
+
+   Required context:
+     - request (Flask global, available in any rendered template)
+     - current_user (Flask-Login)
+
+   The banner doesn't try to stop the impersonation itself — sibling
+   apps don't own the Asgard session — it links back to Asgard where
+   the super-admin can stop. Class contract is stable across MINOR. #}
+{%- set _impersonated_by = request.headers.get('X-Impersonated-By', '') if request else '' -%}
+{%- set _asgard_admin_url = asgard_admin_url | default('https://asgard.eastcoasttowing.com/admin/users') -%}
+{%- if _impersonated_by %}
+<div class="ect-impersonation-banner" role="alert">
+  <span>
+    Viewing as
+    <strong>{{ current_user.email if current_user.is_authenticated else '' }}</strong>
+    on behalf of
+    <strong>{{ _impersonated_by }}</strong>.
+  </span>
+  <a href="{{ _asgard_admin_url }}" class="ect-impersonation-banner__link">Stop in Asgard</a>
+</div>
+{%- endif %}

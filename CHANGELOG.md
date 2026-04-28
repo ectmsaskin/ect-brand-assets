@@ -7,6 +7,34 @@ This project follows [Semantic Versioning](https://semver.org/):
 - **MINOR** — new app added to the pantheon, new variant added, new file format. Backward compatible.
 - **PATCH** — visual refinement to an existing mark, color tweak within tolerance, file regeneration with no design change.
 
+## [1.5.0] — 2026-04-27
+
+### Added
+- **`templates/impersonation-banner.html.j2`** — sticky yellow banner
+  shown when the current request carries an `X-Impersonated-By` header
+  (set by Asgard's `/auth/verify` when a super-admin is impersonating).
+  Renders nothing when the header is absent. Reads
+  `request.headers` directly; no extra context required.
+- **`python/impersonation_banner.py`** — `render_impersonation_banner()`
+  helper for f-string apps. Caller passes the header value + current
+  user's email; returns the banner HTML or empty string.
+- **`css/brand-impersonation.css`** — companion stylesheet defining
+  the `.ect-impersonation-banner` class tree. Apps `<link>` it after
+  `brand-tokens.css`.
+- Extended `tests/test_lockup_parity.py` with 3 impersonation parity
+  cases + escaping check.
+
+### Class contract
+The `.ect-impersonation-banner` and `.ect-impersonation-banner__link`
+classes are now stable. Renames are MAJOR.
+
+### Notes
+- Backward compatible: additive only. Apps on v1.4.0 can bump freely.
+  The banner only renders when an impersonation session is active —
+  invisible during normal use.
+- Asgard's existing custom banner (added when impersonation shipped)
+  consolidates onto the shared partial in this release.
+
 ## [1.4.0] — 2026-04-26
 
 ### Added

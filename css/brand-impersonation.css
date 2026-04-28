@@ -1,0 +1,42 @@
+/*
+ * East Coast Towing — impersonation banner styling.
+ * Companion to templates/impersonation-banner.html.j2 and
+ * python/impersonation_banner.py.
+ * Loaded via:  <link rel="stylesheet" href="/brand/css/brand-impersonation.css">
+ *              after brand-tokens.css.
+ *
+ * Class contract is stable across MINOR releases. Renaming requires MAJOR.
+ *
+ * Loud yellow band sits at the top of every page so a super-admin can't
+ * forget they're impersonating. Sticky at top with a high z-index so it
+ * stays visible above the app-bar.
+ */
+
+.ect-impersonation-banner {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 10px 24px;
+  background: var(--ect-yellow);
+  color: var(--ect-black);
+  border-bottom: 2px solid var(--ect-black);
+  font-family: var(--ect-font-sans); font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.ect-impersonation-banner strong {
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 1px 6px; border-radius: 3px;
+}
+
+.ect-impersonation-banner__link {
+  font-weight: 700;
+  background: var(--ect-black); color: var(--ect-yellow);
+  padding: 4px 12px; border-radius: 4px;
+  text-decoration: none;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+.ect-impersonation-banner__link:hover {
+  background: #000;
+}

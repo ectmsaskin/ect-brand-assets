@@ -306,6 +306,84 @@ They're driven by `:root.light` / `:root.dark` (set by theme-toggle.js)
 with `prefers-color-scheme` as fallback. Apps don't need to define these —
 they inherit them from `brand-tokens.css`.
 
+## Impersonation banner (v1.5.0+)
+
+When a super-admin uses Asgard to impersonate another user, Asgard's
+`/auth/verify` adds an `X-Impersonated-By: <super_admin_email>` header.
+nginx forwards this to the sibling app via the
+`asgard-{auth-request,proxy-headers}.conf` snippets.
+
+Sibling apps render a sticky yellow banner at the top of every page so
+the super-admin can see they're not viewing as themselves. The banner
+auto-renders only when the header is present; invisible during normal
+use.
+
+### Loading
+
+```html
+<link rel="stylesheet" href="/brand/css/brand-tokens.css">
+<link rel="stylesheet" href="/brand/css/brand-impersonation.css">
+```
+
+### Jinja apps
+
+```jinja
+{% include 'impersonation-banner.html.j2' %}
+```
+
+The partial reads `request.headers` directly and `current_user` from
+Flask-Login — no extra context needed. Place it at the very top of
+`<body>`, above the app-bar.
+
+### f-string apps (Heimdall)
+
+```python
+from branding import render_impersonation_banner
+
+html = f"""<!DOCTYPE html>
+<html>...
+<body>
+{render_impersonation_banner(
+    impersonated_by=request.headers.get('X-Impersonated-By', ''),
+    current_user_email=g.user['email'] if g.user else '',
+)}
+{render_app_bar(...)}
+..."""
+```
+
+### Parameters
+
+| Param | Default | Notes |
+|---|---|---|
+| `impersonated_by` | required | the X-Impersonated-By header value; empty = render nothing |
+| `current_user_email` | `""` | the impersonated target's email (for display) |
+| `asgard_admin_url` | Asgard prod | where the "Stop in Asgard" link points |
+
+### Class contract
+
+```
+.ect-impersonation-banner
+  span (text)
+    strong (highlighted emails)
+  .ect-impersonation-banner__link  /* "Stop in Asgard" */
+```
+
+### nginx requirement
+
+The header only reaches sibling Flask apps if nginx is configured to
+forward it. The shared snippet pattern adds:
+
+```nginx
+# /etc/nginx/snippets/asgard-auth-request.conf
+auth_request_set $impersonated_by $upstream_http_x_impersonated_by;
+
+# /etc/nginx/snippets/asgard-proxy-headers.conf
+proxy_set_header X-Impersonated-By $impersonated_by;
+```
+
+Apps that don't include those snippets won't see the header and the
+banner will silently never render.
+
 ## Don't
 
 - Don't recolor the medallions outside the palette.

@@ -36,18 +36,22 @@
 }
 
 /* Stable .nav-btn class for app-internal use (apps emit <a class="nav-btn">
-   inside the nav slot). Definition lifted from Heimdall/Huginn baseline. */
+   inside the nav slot). Highlight-on-hover style (v1.6.0+):
+   transparent border by default; hover paints the background to
+   --ect-nav-hover-bg; .active paints to --ect-nav-border (a touch stronger).
+   .action keeps a subtle border so theme-toggle / logout still read as
+   icon-style chips rather than text links. */
 .ect-app-bar .nav-btn,
 .ect-app-bar__nav-btn {
   font-family: var(--ect-font-sans);
   font-size: 11px;
   letter-spacing: 0.05em;
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.15s;
-  border: 1px solid var(--ect-nav-border);
+  border: 1px solid transparent;
   color: var(--ect-nav-text);
   background: none;
 }
@@ -55,22 +59,63 @@
 .ect-app-bar .nav-btn:hover,
 .ect-app-bar__nav-btn:hover {
   color: var(--ect-nav-text-bright);
-  border-color: var(--ect-nav-text);
+  background: var(--ect-nav-hover-bg);
+  border-color: transparent;
 }
 
 .ect-app-bar .nav-btn.active,
 .ect-app-bar__nav-btn.active {
-  background: var(--ect-nav-surface);
   color: var(--ect-nav-text-bright);
-  border-color: var(--ect-nav-border);
+  background: var(--ect-nav-border);
+  border-color: transparent;
 }
 
-/* .action modifier: theme-toggle and other icon-only buttons. Strips
-   background so the chip outline reads as an icon, not a labeled button. */
+/* .action modifier: theme-toggle and other icon-only buttons. Keeps a
+   subtle outline so it reads as an icon button, not a text link. */
 .ect-app-bar .nav-btn.action,
 .ect-app-bar__nav-btn.action {
   background: none;
   color: var(--ect-nav-text);
+  border-color: var(--ect-nav-hover-bg);
+}
+
+.ect-app-bar .nav-btn.action:hover,
+.ect-app-bar__nav-btn.action:hover {
+  background: none;
+  border-color: var(--ect-nav-border);
+}
+
+/* .nav-group / .nav-group-label — optional infrastructure for apps that
+   want to split the primary nav into labeled clusters (e.g. Heimdall's
+   Operate / Admin / Docs split). Apps opt in by emitting:
+     <div class="nav-group">
+       <span class="nav-group-label">Operate</span>
+       <a class="nav-btn" …>…</a>
+     </div>
+   inside the brand-kit primary_nav_html slot. The label is small uppercase
+   mono; the group is inline-flex so it sits inline with other groups in
+   the .ect-app-bar__nav row. */
+.ect-app-bar .nav-group,
+.ect-app-bar__nav-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ect-app-bar .nav-group + .nav-group,
+.ect-app-bar__nav-group + .ect-app-bar__nav-group {
+  margin-left: 12px;
+}
+
+.ect-app-bar .nav-group-label,
+.ect-app-bar__nav-group-label {
+  font-family: var(--ect-font-sans);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ect-nav-text);
+  padding: 0 6px 0 2px;
+  white-space: nowrap;
 }
 
 .ect-app-bar__user {

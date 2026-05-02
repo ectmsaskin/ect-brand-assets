@@ -7,6 +7,46 @@ This project follows [Semantic Versioning](https://semver.org/):
 - **MINOR** — new app added to the pantheon, new variant added, new file format. Backward compatible.
 - **PATCH** — visual refinement to an existing mark, color tweak within tolerance, file regeneration with no design change.
 
+## [1.6.0] — 2026-05-02
+
+### Changed
+- **`css/brand-appbar.css` — `.nav-btn` restyled to highlight-on-hover.**
+  Default state has a transparent border (was a 1px outline against
+  `--ect-nav-border`). Hover paints the background to a new
+  `--ect-nav-hover-bg` token. `.active` paints to `--ect-nav-border`,
+  giving active links a stronger paint than hover.
+  - `.nav-btn.action` (theme-toggle / logout) keeps a subtle border so
+    it still reads as an icon-style button rather than a text link.
+  - Class API is unchanged — every existing `<a class="nav-btn">` keeps
+    working. The visual change is the hover treatment.
+
+### Added
+- **`--ect-nav-hover-bg` token** (`css/brand-tokens.css`) — subtler
+  highlight color paired with `--ect-nav-border` for the new
+  hover/active paint pattern. Defined for both `:root` (dark) and
+  `:root.light` and the `prefers-color-scheme: light` media query.
+- **`.nav-group` / `.nav-group-label` classes** (`css/brand-appbar.css`)
+  — optional infrastructure for apps that want to split the primary
+  nav into labeled clusters (e.g. Heimdall's Operate / Admin / Docs
+  split). Apps opt in by wrapping `<a class="nav-btn">` anchors inside
+  `<div class="nav-group">` with a leading
+  `<span class="nav-group-label">`. Groups separate by
+  `margin-left: 12px` between adjacent groups.
+
+### Class contract
+The `.nav-group`, `.nav-group-label`, and `--ect-nav-hover-bg` names
+are now stable. Renames are MAJOR.
+
+### Notes
+- Backward compatible at the class-API level — no class names removed
+  or renamed. Visual presentation does change for any app that bumps
+  the submodule pin and renders `<a class="nav-btn">` inside an
+  `.ect-app-bar`. Each app opts in deliberately by bumping its
+  vendored pin to v1.6.0.
+- The new highlight-on-hover style aligns with the Heimdall redesign
+  mockup (`docs/design/heimdall-redesign.html` in the Heimdall repo)
+  and is the recommended direction for the rest of the pantheon.
+
 ## [1.5.0] — 2026-04-27
 
 ### Added
